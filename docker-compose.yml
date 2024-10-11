@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  php-apache:
+    container_name: AcervoSpassuServerWeb
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - mynetwork
+
+  mysql:
+    image: mysql:8.0
+    container_name: AcervoSpassuMysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 4c3rv0Sp4ssu
+      MYSQL_DATABASE: acervodigital
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 4c3rv0Sp4ssu
+    volumes:
+      - ../data/mysql/:/var/lib/mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - mynetwork 
+networks:
+  mynetwork:
+    external: true

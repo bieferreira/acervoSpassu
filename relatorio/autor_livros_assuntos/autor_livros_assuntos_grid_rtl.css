@@ -1,0 +1,15 @@
+.css_codigolivro_label, .css_codigolivro_label:hover {text-align:center;vertical-align:middle;justify-content:center;font-weight:bold;}
+.css_codigolivro_grid_line, .css_codigolivro_grid_line:hover {vertical-align: middle;text-align: center;}
+.css_titulolivro_label, .css_titulolivro_label:hover {text-align:center;vertical-align:middle;justify-content:center;font-weight:bold;}
+.css_titulolivro_grid_line, .css_titulolivro_grid_line:hover {vertical-align: middle;text-align: right;}
+.css_titulolivro_tot_ger, .css_titulolivro_tot_ger:hover {text-align: ;text-align: right;}
+.css_assuntolivro_label, .css_assuntolivro_label:hover {text-align:center;vertical-align:middle;justify-content:center;font-weight:bold;}
+.css_assuntolivro_grid_line, .css_assuntolivro_grid_line:hover {vertical-align: middle;text-align: right;}
+.css_valor_label, .css_valor_label:hover {text-align:center;vertical-align:middle;justify-content:center;font-weight:bold;}
+.css_valor_grid_line, .css_valor_grid_line:hover {vertical-align: middle;text-align: right;}
+.css_codigoautor_label, .css_codigoautor_label:hover {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_codigoautor_grid_line, .css_codigoautor_grid_line:hover {vertical-align: top;text-align: right;}
+.css_nomeautor_label, .css_nomeautor_label:hover {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_nomeautor_grid_line, .css_nomeautor_grid_line:hover {vertical-align: top;text-align: right;}
+.css_titulolivro_C_sub_tot, .css_titulolivro_C_sub_tot:hover {text-align: right;text-align: right;}
+.css_titulolivro_C_tot_ger, .css_titulolivro_C_tot_ger:hover {text-align: right;}
