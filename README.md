@@ -1,6 +1,6 @@
 ################################# Etapas execução projeto #################################
 
-1 Mapeamento desafio
+1 Mapeamento 
 
 2 Definição utilizar css grid e PHP Procedural
 
@@ -41,8 +41,5 @@
 
 10 Finalizado ajustes e testes
 
-    => Criado repositório remoto (PUBLICO) qualquer inconsistência, se possível avisar
+    => Criado repositório remoto (PUBLICO)
     => https://github.com/bieferreira/acervoSpassu
-
-
-DESDE JÁ AGRADEÇO, MUITO SATISFEITO E COM ÓTIMAS EXPECTATIVAS.
