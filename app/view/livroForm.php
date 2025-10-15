@@ -94,7 +94,7 @@
             let valor = $(this).val();
             
             
-            if (!/^\d{0,4}$/.test(valor) || valor > 2024) {
+            if (!/^\d{0,4}$/.test(valor) || valor > 2025) {
                 $(this).val('');
                 alert('Favor informar um ano válido');
             }

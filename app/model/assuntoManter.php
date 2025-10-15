@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 throw new InvalidArgumentException($erroQuantidadeCaracteres);
             }
 
-            $sql = "INSERT INTO Assunto (Descricao, CodU_Inclusao, DataU_Inclusao) VALUES (:descricao, :codu_inclusao, :datau_inclusao)";
+            $sql = "INSERT INTO ".MIGRATION."Assunto (Descricao, CodU_Inclusao, DataU_Inclusao) VALUES (:descricao, :codu_inclusao, :datau_inclusao)";
             $sqlPdo = $pdo->prepare($sql);
             $sqlPdo->bindParam(':descricao', $descricao);
             $sqlPdo->bindParam(':codu_inclusao', $usuario);
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = CODUALTERACAO; 
 
         try {
-            $sql = "UPDATE Assunto SET Descricao = :descricao, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE CodAs = :codas AND Excluido = :excluido";
+            $sql = "UPDATE ".MIGRATION."Assunto SET Descricao = :descricao, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE CodAs = :codas AND Excluido = :excluido";
             $sqlPdo = $pdo->prepare($sql);
             $sqlPdo->bindParam(':codas', $codas);
             $sqlPdo->bindParam(':descricao', $descricao);
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && (isset($_GET['excluir']) && !empty($_
         
     try {
 
-        $sql = "CALL ExcluirAssuntoLogicamente(:codas)";
+        $sql = "CALL ".MIGRATION."ExcluirAssuntoLogicamente(:codas)";
         $sqlPdo = $pdo->prepare($sql);
         $sqlPdo->bindParam(':codas', $codas);
     

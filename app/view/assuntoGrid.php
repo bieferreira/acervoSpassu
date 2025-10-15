@@ -29,7 +29,11 @@
                 <a href="?page=<?= $page - 1 ?>&limit=<?= $limit ?>" class="btn-pagination">Anterior</a>
             <?php endif; ?>
 
-            Página <?= $page ?> de <?= $totalPages ?>
+            <?php if (empty($totalPages)): ?>
+                Nenhum registro encontrado
+            <?php else: ?>
+                Página <?= $page ?> de <?= $totalPages ?>
+            <?php endif; ?>
 
             <?php if ($page < $totalPages): ?>
                 <a href="?page=<?= $page + 1 ?>&limit=<?= $limit ?>" class="btn-pagination">Próxima</a>

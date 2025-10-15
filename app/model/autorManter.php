@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(empty($codau)) {
         $usuario = CODUINCLUSAO;
         try {
-            $sql = "INSERT INTO Autor (Nome, CodU_Inclusao, DataU_Inclusao) VALUES (:nome, :codu_inclusao, :datau_inclusao)";
+            $sql = "INSERT INTO ".MIGRATION."Autor (Nome, CodU_Inclusao, DataU_Inclusao) VALUES (:nome, :codu_inclusao, :datau_inclusao)";
             $sqlPdo = $pdo->prepare($sql);
             $sqlPdo->bindParam(':nome', $nome);
             $sqlPdo->bindParam(':codu_inclusao', $usuario);
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $excluido = EXCLUIDO;
         $usuario = CODUALTERACAO; 
         try {
-            $sql = "UPDATE Autor SET Nome = :nome, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE CodAu = :codau AND Excluido = :excluido";
+            $sql = "UPDATE ".MIGRATION."Autor SET Nome = :nome, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE CodAu = :codau AND Excluido = :excluido";
             $sqlPdo = $pdo->prepare($sql);
             $sqlPdo->bindParam(':codau', $codau);
             $sqlPdo->bindParam(':nome', $nome);
@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && (isset($_GET['excluir']) && !empty($_
         
     try {
 
-        $sql = "CALL ExcluirAutorLogicamente(:codau)";
+        $sql = "CALL ".MIGRATION."ExcluirAutorLogicamente(:codau)";
         $sqlPdo = $pdo->prepare($sql);
         $sqlPdo->bindParam(':codau', $codau);
     

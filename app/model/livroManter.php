@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(empty($codl)) {
         $usuario = CODUINCLUSAO;
         try {
-            $sql = "INSERT INTO Livro (Titulo, Editora, Edicao, AnoPublicacao, Valor, CodU_Inclusao, DataU_Inclusao) VALUES (:titulo, :editora, :edicao, :anopublicacao, :valor, :codu_inclusao, :datau_inclusao)";
+            $sql = "INSERT INTO ".MIGRATION."Livro (Titulo, Editora, Edicao, AnoPublicacao, Valor, CodU_Inclusao, DataU_Inclusao) VALUES (:titulo, :editora, :edicao, :anopublicacao, :valor, :codu_inclusao, :datau_inclusao)";
             $sqlPdo = $pdo->prepare($sql);
             $sqlPdo->bindParam(':titulo', $titulo);
             $sqlPdo->bindParam(':editora', $editora);
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             foreach ($_POST['codigoautor'] as $valorautor) {
                 $autor_codau = $valorautor;
 
-                $sql = "INSERT INTO Livro_Autor (Livro_CodL, Autor_CodAu, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :autor_codau, :codu_inclusao, :datau_inclusao)";
+                $sql = "INSERT INTO ".MIGRATION."Livro_Autor (Livro_CodL, Autor_CodAu, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :autor_codau, :codu_inclusao, :datau_inclusao)";
                 $sqlPdo = $pdo->prepare($sql);
                 $sqlPdo->bindParam(':livro_codl', $livro_codl);
                 $sqlPdo->bindParam(':autor_codau', $autor_codau);
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             foreach ($_POST['codigoassunto'] as $valorassunto) {
                 $assunto_codas = $valorassunto;
                 
-                $sql = "INSERT INTO Livro_Assunto (Livro_CodL, Assunto_CodAs, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :assunto_codas, :codu_inclusao, :datau_inclusao)";
+                $sql = "INSERT INTO ".MIGRATION."Livro_Assunto (Livro_CodL, Assunto_CodAs, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :assunto_codas, :codu_inclusao, :datau_inclusao)";
                 $sqlPdo = $pdo->prepare($sql);
                 $sqlPdo->bindParam(':livro_codl', $livro_codl);
                 $sqlPdo->bindParam(':assunto_codas', $assunto_codas);
@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = CODUALTERACAO; 
 
         try {
-            $sql = "UPDATE Livro SET Titulo = :titulo, Editora = :editora, Edicao = :edicao, AnoPublicacao = :anopublicacao, Valor = :valor, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE CodL = :codl AND Excluido = :excluido";
+            $sql = "UPDATE ".MIGRATION."Livro SET Titulo = :titulo, Editora = :editora, Edicao = :edicao, AnoPublicacao = :anopublicacao, Valor = :valor, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE CodL = :codl AND Excluido = :excluido";
             $sqlPdo = $pdo->prepare($sql);
             $sqlPdo->bindParam(':codl', $codl);
             $sqlPdo->bindParam(':titulo', $titulo);
@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $excluido = EXCLUIDO;
             $usuario = CODUALTERACAO;
 
-                $sql = "UPDATE Livro_Autor SET Excluido = :setexcluido, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE Livro_CodL = :livro_codl AND Excluido = :excluido";
+                $sql = "UPDATE ".MIGRATION."Livro_Autor SET Excluido = :setexcluido, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE Livro_CodL = :livro_codl AND Excluido = :excluido";
                 $sqlPdo = $pdo->prepare($sql);
                 $sqlPdo->bindParam(':livro_codl', $livro_codl);
                 $sqlPdo->bindParam(':setexcluido', $setexcluido);
@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 $sqlPdo->execute();
 
-                $sql = "UPDATE Livro_Assunto SET Excluido = :setexcluido, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE Livro_CodL = :livro_codl AND Excluido = :excluido";
+                $sql = "UPDATE ".MIGRATION."Livro_Assunto SET Excluido = :setexcluido, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE Livro_CodL = :livro_codl AND Excluido = :excluido";
                 $sqlPdo = $pdo->prepare($sql);
                 $sqlPdo->bindParam(':livro_codl', $livro_codl);
                 $sqlPdo->bindParam(':setexcluido', $setexcluido);
@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $autor_codau = $valorautor;
 
-                $sql = "INSERT INTO Livro_Autor (Livro_CodL, Autor_CodAu, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :autor_codau, :codu_inclusao, :datau_inclusao)";
+                $sql = "INSERT INTO ".MIGRATION."Livro_Autor (Livro_CodL, Autor_CodAu, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :autor_codau, :codu_inclusao, :datau_inclusao)";
                 $sqlPdo = $pdo->prepare($sql);
                 $sqlPdo->bindParam(':livro_codl', $livro_codl);
                 $sqlPdo->bindParam(':autor_codau', $autor_codau);
@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             foreach ($_POST['codigoassunto'] as $valorassunto) {
                 $assunto_codas = $valorassunto;
                 
-                $sql = "INSERT INTO Livro_Assunto (Livro_CodL, Assunto_CodAs, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :assunto_codas, :codu_inclusao, :datau_inclusao)";
+                $sql = "INSERT INTO ".MIGRATION."Livro_Assunto (Livro_CodL, Assunto_CodAs, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :assunto_codas, :codu_inclusao, :datau_inclusao)";
                 $sqlPdo = $pdo->prepare($sql);
                 $sqlPdo->bindParam(':livro_codl', $livro_codl);
                 $sqlPdo->bindParam(':assunto_codas', $assunto_codas);
@@ -191,7 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && (isset($_GET['excluir']) && !empty($_
         
     try {
 
-        $sql = "CALL ExcluirLivroLogicamente(:codl)";
+        $sql = "CALL ".MIGRATION."ExcluirLivroLogicamente(:codl)";
         $sqlPdo = $pdo->prepare($sql);
         $sqlPdo->bindParam(':codl', $codl);
     

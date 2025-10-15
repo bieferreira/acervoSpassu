@@ -21,7 +21,7 @@ require 'conexaoDataBase.php';
                 throw new InvalidArgumentException($erroCampoNumerico);
             }
         
-            $sql = "SELECT * FROM Assunto WHERE CodAs = :codas";
+            $sql = "SELECT * FROM ".MIGRATION."Assunto WHERE CodAs = :codas";
             $sqlPdo = $pdo->prepare($sql);
             $sqlPdo->bindParam(':codas', $codas);
             $sqlPdo->execute();

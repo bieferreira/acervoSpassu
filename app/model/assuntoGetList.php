@@ -8,7 +8,7 @@ try {
         throw new InvalidArgumentException($erroValorExclusao);
     }
 
-    $sql = "SELECT * FROM Assunto WHERE Excluido = :excluido ORDER BY Descricao LIMIT :limit OFFSET :offset";
+    $sql = "SELECT * FROM ".MIGRATION."Assunto WHERE Excluido = :excluido ORDER BY Descricao LIMIT :limit OFFSET :offset";
     $sqlPdo = $pdo->prepare($sql);
     $sqlPdo->bindParam(':excluido', $excluido, PDO::PARAM_INT);
     $sqlPdo->bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -16,7 +16,7 @@ try {
     $sqlPdo->execute();
     $retornoPdo = $sqlPdo->fetchAll(PDO::FETCH_ASSOC);
 
-    $totalSql = "SELECT COUNT(*) as total FROM Assunto WHERE Excluido = :excluido";
+    $totalSql = "SELECT COUNT(*) as total FROM ".MIGRATION."Assunto WHERE Excluido = :excluido";
     $totalPdo = $pdo->prepare($totalSql);
     $totalPdo->bindParam(':excluido', $excluido, PDO::PARAM_INT);
     $totalPdo->execute();

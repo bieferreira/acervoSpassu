@@ -21,7 +21,7 @@ require 'conexaoDataBase.php';
                 throw new InvalidArgumentException($erroCampoNumerico);
             }
         
-            $sql = "SELECT * FROM Autor WHERE CodAu = :codau";
+            $sql = "SELECT * FROM ".MIGRATION."Autor WHERE CodAu = :codau";
             $sqlPdo = $pdo->prepare($sql);
             $sqlPdo->bindParam(':codau', $codau);
             $sqlPdo->execute();

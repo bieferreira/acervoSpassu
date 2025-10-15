@@ -30,7 +30,7 @@ require 'conexaoDataBase.php';
                 throw new InvalidArgumentException($erroValorExclusao);
             }
 
-            $sql = "SELECT l.*, (SELECT GROUP_CONCAT(Autor_CodAu SEPARATOR ',') FROM Livro_Autor WHERE Livro_CodL = l.CodL AND Excluido = :excluido ) AS livroautores, (SELECT GROUP_CONCAT(Assunto_CodAs SEPARATOR ',') FROM Livro_Assunto WHERE Livro_CodL = l.CodL  AND Excluido = :excluido ) AS livroassuntos FROM Livro l WHERE CodL = :codl";
+            $sql = "SELECT l.*, (SELECT GROUP_CONCAT(Autor_CodAu SEPARATOR ',') FROM ".MIGRATION."Livro_Autor WHERE Livro_CodL = l.CodL AND Excluido = :excluido ) AS livroautores, (SELECT GROUP_CONCAT(Assunto_CodAs SEPARATOR ',') FROM ".MIGRATION."Livro_Assunto WHERE Livro_CodL = l.CodL  AND Excluido = :excluido ) AS livroassuntos FROM ".MIGRATION."Livro l WHERE CodL = :codl";
             $sqlPdo = $pdo->prepare($sql);
             $sqlPdo->bindParam(':codl', $codl);
             $sqlPdo->bindParam(':excluido', $excluido);
@@ -66,7 +66,7 @@ require 'conexaoDataBase.php';
             throw new InvalidArgumentException($erroValorExclusao);
         }
 
-        $sql1 = "SELECT * FROM Autor WHERE Excluido = :excluido ORDER BY Nome";
+        $sql1 = "SELECT * FROM ".MIGRATION."Autor WHERE Excluido = :excluido ORDER BY Nome";
         $sqlPdo1 = $pdo->prepare($sql1);
         $sqlPdo1->bindParam(':excluido', $excluido);
         $sqlPdo1->execute();
@@ -100,7 +100,7 @@ require 'conexaoDataBase.php';
             throw new InvalidArgumentException($erroValorExclusao);
         }
 
-        $sql2 = "SELECT * FROM Assunto WHERE Excluido = :excluido ORDER BY Descricao";
+        $sql2 = "SELECT * FROM ".MIGRATION."Assunto WHERE Excluido = :excluido ORDER BY Descricao";
         $sqlPdo2 = $pdo->prepare($sql2);
         $sqlPdo2->bindParam(':excluido', $excluido);
         $sqlPdo2->execute();
