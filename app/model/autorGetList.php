@@ -9,11 +9,20 @@ try {
         throw new InvalidArgumentException($erroValorExclusao);
     }
 
-    $sql = "SELECT * FROM Autor WHERE Excluido = :excluido ORDER BY Nome";
+    $sql = "SELECT * FROM Autor WHERE Excluido = :excluido ORDER BY Nome LIMIT :limit OFFSET :offset";
     $sqlPdo = $pdo->prepare($sql);
-    $sqlPdo->bindParam(':excluido', $excluido);
+    $sqlPdo->bindParam(':excluido', $excluido, PDO::PARAM_INT);
+    $sqlPdo->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $sqlPdo->bindParam(':offset', $offset, PDO::PARAM_INT);
     $sqlPdo->execute();
     $retornoPdo = $sqlPdo->fetchAll(PDO::FETCH_ASSOC);
+
+    $totalSql = "SELECT COUNT(*) as total FROM Autor WHERE Excluido = :excluido";
+    $totalPdo = $pdo->prepare($totalSql);
+    $totalPdo->bindParam(':excluido', $excluido, PDO::PARAM_INT);
+    $totalPdo->execute();
+    $total = $totalPdo->fetch(PDO::FETCH_ASSOC)['total'];
+    $totalPages = ceil($total / $limit);
     
 } catch (PDOException $e) {
     

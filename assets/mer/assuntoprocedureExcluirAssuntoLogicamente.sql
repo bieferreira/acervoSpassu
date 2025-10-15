@@ -1,3 +1,7 @@
+DROP PROCEDURE IF EXISTS acervodigital.ExcluirAssuntoLogicamente;
+
+DELIMITER $$
+$$
 CREATE DEFINER=`root`@`%` PROCEDURE `acervodigital`.`ExcluirAssuntoLogicamente`(IN CODIGO INT)
 BEGIN
 	
@@ -26,4 +30,5 @@ BEGIN
         SELECT 'Não foi possível realizar a exclusão, Assunto com livros cadastrados' AS mensagemRetorno;
     END IF;
    
-END
+END$$
+DELIMITER ;

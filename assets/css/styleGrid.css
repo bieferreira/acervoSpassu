@@ -44,3 +44,18 @@
     border: none;
     height: 100px;
 }
+
+.pagination {
+    align-items: center;
+    background-color: #FFF;
+    display: flex; 
+    grid-column: 1 / -1; 
+    justify-content: center; 
+    padding-top: 10px;
+    text-align: center;
+}
+
+.btn-pagination {
+    padding: 0px 10px;
+    color: #F94615;
+};

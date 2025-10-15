@@ -43,3 +43,12 @@
 
     => Criado repositório remoto (PUBLICO)
     => https://github.com/bieferreira/acervoSpassu
+
+
+CONFIGURAÇÃO utilização
+
+    => clonar projeto
+    => docker network create mynetwork
+    => criar estrutura de dados assets/mer
+    => chmod -R 777 relatorio/_lib/tmp
+    => http://localhost/principal.html

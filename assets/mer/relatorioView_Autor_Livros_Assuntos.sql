@@ -1,4 +1,4 @@
-CREATE VIEW View_Autor_Livros_Assuntos AS
+CREATE VIEW view_autor_livros_assuntos AS
 SELECT 
     a.CodAu AS CodigoAutor, 
     a.Nome AS NomeAutor, 

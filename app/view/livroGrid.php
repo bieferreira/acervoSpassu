@@ -25,6 +25,17 @@
                 <a href="../model/livroManter.php?livro=<?= $rPdo['CodL']; ?>&csrf_token=<?= getCsrfToken(); ?>&excluir=1" onclick="return confirm('Tem certeza que deseja excluir?')" target="iframeManter">Excluir</a>
             </div>
         <?php endforeach; ?>
+        <div class="pagination">
+            <?php if ($page > 1): ?>
+                <a href="?page=<?= $page - 1 ?>&limit=<?= $limit ?>" class="btn-pagination">Anterior</a>
+            <?php endif; ?>
+
+            Página <?= $page ?> de <?= $totalPages ?>
+
+            <?php if ($page < $totalPages): ?>
+                <a href="?page=<?= $page + 1 ?>&limit=<?= $limit ?>" class="btn-pagination">Próxima</a>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
 
