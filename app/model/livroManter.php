@@ -26,7 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(empty($codl)) {
         $usuario = CODUINCLUSAO;
+
         try {
+            if (!$pdo->inTransaction()) {
+                $pdo->beginTransaction();
+            }
+
             $sql = "INSERT INTO ".MIGRATION."Livro (Titulo, Editora, Edicao, AnoPublicacao, Valor, CodU_Inclusao, DataU_Inclusao) VALUES (:titulo, :editora, :edicao, :anopublicacao, :valor, :codu_inclusao, :datau_inclusao)";
             $sqlPdo = $pdo->prepare($sql);
             $sqlPdo->bindParam(':titulo', $titulo);
@@ -37,53 +42,84 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sqlPdo->bindParam(':codu_inclusao', $usuario);
             $sqlPdo->bindParam(':datau_inclusao', $datahoraatual);
 
-        if ($sqlPdo->execute()) {
+            if ($sqlPdo->execute()) {
 
-            $livro_codl = $pdo->lastInsertId();
-            
-            foreach ($_POST['codigoautor'] as $valorautor) {
-                $autor_codau = $valorautor;
+                $livro_codl = $pdo->lastInsertId();
 
-                $sql = "INSERT INTO ".MIGRATION."Livro_Autor (Livro_CodL, Autor_CodAu, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :autor_codau, :codu_inclusao, :datau_inclusao)";
-                $sqlPdo = $pdo->prepare($sql);
-                $sqlPdo->bindParam(':livro_codl', $livro_codl);
-                $sqlPdo->bindParam(':autor_codau', $autor_codau);
-                $sqlPdo->bindParam(':codu_inclusao', $usuario);
-                $sqlPdo->bindParam(':datau_inclusao', $datahoraatual);
-            
-                $sqlPdo->execute();
+                foreach ($_POST['codigoautor'] as $valorautor) {
+                    $autor_codau = $valorautor;
+
+                    $sql = "INSERT INTO ".MIGRATION."Livro_Autor (Livro_CodL, Autor_CodAu, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :autor_codau, :codu_inclusao, :datau_inclusao)";
+                    $sqlPdo = $pdo->prepare($sql);
+                    $sqlPdo->bindParam(':livro_codl', $livro_codl);
+                    $sqlPdo->bindParam(':autor_codau', $autor_codau);
+                    $sqlPdo->bindParam(':codu_inclusao', $usuario);
+                    $sqlPdo->bindParam(':datau_inclusao', $datahoraatual);
+
+                    
+                    // ob_start();
+                    // $sqlPdo->debugDumpParams();
+                    // $debug = ob_get_clean();
+                    // echo "<pre style='color:blue'>DEBUG SQL:\n".htmlspecialchars($debug)."\nSQL: ".htmlspecialchars($sql)."\nParams: livro_codl={$livro_codl}, autor_codau={$autor_codau}, codu_inclusao={$usuario}, datau_inclusao={$datahoraatual}</pre>";
+                    
+
+                    if (!$sqlPdo->execute()) {
+                        $pdo->rollBack();
+                        throw new PDOException('Falha ao inserir autor do livro.');
+                    }
+                }
+             
+                foreach ($_POST['codigoassunto'] as $valorassunto) {
+                    $assunto_codas = $valorassunto;
+
+                    $sql = "INSERT INTO ".MIGRATION."Livro_Assunto (Livro_CodL, Assunto_CodAs, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :assunto_codas, :codu_inclusao, :datau_inclusao)";
+                    $sqlPdo = $pdo->prepare($sql);
+                    $sqlPdo->bindParam(':livro_codl', $livro_codl);
+                    $sqlPdo->bindParam(':assunto_codas', $assunto_codas);
+                    $sqlPdo->bindParam(':codu_inclusao', $usuario);
+                    $sqlPdo->bindParam(':datau_inclusao', $datahoraatual);
+
+                    if (!$sqlPdo->execute()) {
+                        $pdo->rollBack();
+                        throw new PDOException('Falha ao inserir assunto do livro.');
+                    }
+                }
+
+                if ($pdo->inTransaction()) {
+                    $pdo->commit();
+                }
+
+                echo "<h3 style='color:green'>Livro cadastrado com sucesso!</h3>";
+                echo "<script>parent.document.getElementById('btnEnviar').style.display ='none';</script>";
+                setIframeMensagemErro();
+                echo "<script>setTimeout(() => { parent.window.location.href='../view/livroGrid.php'; }, '5000');</script>";
+
+            } else {
+                if ($pdo->inTransaction()) {
+                    $pdo->rollBack();
+                    // $pdo->commit();
+                }
+                throw new PDOException('Falha ao inserir livro.');
             }
-
-            foreach ($_POST['codigoassunto'] as $valorassunto) {
-                $assunto_codas = $valorassunto;
-                
-                $sql = "INSERT INTO ".MIGRATION."Livro_Assunto (Livro_CodL, Assunto_CodAs, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :assunto_codas, :codu_inclusao, :datau_inclusao)";
-                $sqlPdo = $pdo->prepare($sql);
-                $sqlPdo->bindParam(':livro_codl', $livro_codl);
-                $sqlPdo->bindParam(':assunto_codas', $assunto_codas);
-                $sqlPdo->bindParam(':codu_inclusao', $usuario);
-                $sqlPdo->bindParam(':datau_inclusao', $datahoraatual);
-            
-                $sqlPdo->execute();
-            }
-
-            echo "<h3 style='color:green'>Livro cadastrado com sucesso!</h3>";
-            echo "<script>parent.document.getElementById('btnEnviar').style.display ='none';</script>";
-            setIframeMensagemErro();
-            echo "<script>setTimeout(() => { parent.window.location.href='../view/livroGrid.php'; }, '5000');</script>";
-
-        } 
 
         } catch (PDOException $e) {
 
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+                // $pdo->commit();
+            }
+            
             $mensagemerro = $e->getMessage();
-
         }
     } else { 
         $excluido = EXCLUIDO;
         $usuario = CODUALTERACAO; 
 
         try {
+            if (!$pdo->inTransaction()) {
+                $pdo->beginTransaction();
+            }
+
             $sql = "UPDATE ".MIGRATION."Livro SET Titulo = :titulo, Editora = :editora, Edicao = :edicao, AnoPublicacao = :anopublicacao, Valor = :valor, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE CodL = :codl AND Excluido = :excluido";
             $sqlPdo = $pdo->prepare($sql);
             $sqlPdo->bindParam(':codl', $codl);
@@ -112,7 +148,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $sqlPdo->bindParam(':codu_alteracao', $usuario);
                 $sqlPdo->bindParam(':datau_alteracao', $datahoraatual);
                 
-                $sqlPdo->execute();
+                if (!$sqlPdo->execute()) {
+                    $pdo->rollBack();
+                    throw new PDOException('Falha ao marcar autores antigos como excluídos.');
+                }
 
                 $sql = "UPDATE ".MIGRATION."Livro_Assunto SET Excluido = :setexcluido, CodU_Alteracao = :codu_alteracao, DataU_Alteracao = :datau_alteracao WHERE Livro_CodL = :livro_codl AND Excluido = :excluido";
                 $sqlPdo = $pdo->prepare($sql);
@@ -122,7 +161,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $sqlPdo->bindParam(':codu_alteracao', $usuario);
                 $sqlPdo->bindParam(':datau_alteracao', $datahoraatual);
     
-                $sqlPdo->execute();
+                if (!$sqlPdo->execute()) {
+                    $pdo->rollBack();
+                    throw new PDOException('Falha ao marcar assuntos antigos como excluídos.');
+                }
 
             $usuario = CODUINCLUSAO;
 
@@ -132,12 +174,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $sql = "INSERT INTO ".MIGRATION."Livro_Autor (Livro_CodL, Autor_CodAu, CodU_Inclusao, DataU_Inclusao) VALUES (:livro_codl, :autor_codau, :codu_inclusao, :datau_inclusao)";
                 $sqlPdo = $pdo->prepare($sql);
+                
                 $sqlPdo->bindParam(':livro_codl', $livro_codl);
                 $sqlPdo->bindParam(':autor_codau', $autor_codau);
                 $sqlPdo->bindParam(':codu_inclusao', $usuario);
                 $sqlPdo->bindParam(':datau_inclusao', $datahoraatual);
 
-                $sqlPdo->execute();
+                if (!$sqlPdo->execute()) {
+                    $pdo->rollBack();
+                    throw new PDOException('Falha ao inserir autor do livro (update).');
+                }
             }
 
             foreach ($_POST['codigoassunto'] as $valorassunto) {
@@ -150,7 +196,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $sqlPdo->bindParam(':codu_inclusao', $usuario);
                 $sqlPdo->bindParam(':datau_inclusao', $datahoraatual);
             
-                $sqlPdo->execute();
+                if (!$sqlPdo->execute()) {
+                    $pdo->rollBack();
+                    throw new PDOException('Falha ao inserir assunto do livro (update).');
+                }
+            }
+
+            if ($pdo->inTransaction()) {
+                $pdo->commit();
             }
 
             echo "<h3 style='color:green'>Livro alterado com sucesso!</h3>";
@@ -160,6 +213,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         } catch (PDOException $e) {
             
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
             $mensagemerro = $e->getMessage();
 
         }
@@ -168,8 +224,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if($mensagemerro) {
         $mensagemSecundaria = 'Por favor, tente novamente mais tarde.';
         str_contains($mensagemerro, 'Duplicate entry') && $mensagemSecundaria = 'Já Existe um Livro cadastrado com este título informado.';
-        echo $mensagemerro;
-        //setMenssageError(mensagemPrincipal : "Não foi possível ".(empty($codl) ? 'cadastrar' : 'alterar')." o livro.", mensagemSecundaria : $mensagemSecundaria);
+        str_contains($mensagemerro, 'FK_LivroAutor_Livro') && $mensagemSecundaria = 'Falha ao inserir autor do livro.';
+        str_contains($mensagemerro, 'FK_LivroAssunto_Livro') && $mensagemSecundaria = 'Falha ao inserir assunto do livro.';
+        setMenssageError(mensagemPrincipal : "Não foi possível ".(empty($codl) ? 'cadastrar' : 'alterar')." o livro.", mensagemSecundaria : $mensagemSecundaria);
         setIframeMensagemErro();
     }
 

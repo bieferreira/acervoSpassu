@@ -11,7 +11,7 @@ const PAGINAINICIAL = 1;
 const REGISTROSPORPAGINA = 10;
 const CODUINCLUSAO = 'INCLUSAO';
 const CODUALTERACAO = 'ALTERACAO';
-const MIGRATION = 'Migration';
+const MIGRATION = '';
 
 try {
 

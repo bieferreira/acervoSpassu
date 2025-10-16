@@ -241,7 +241,7 @@ final class InitAcervoSpassu extends AbstractMigration
         $this->table('MigrationLivro_Assunto')
             ->addForeignKey(
                 'Livro_CodL',
-                'Livro',
+                'MigrationLivro',
                 'CodL',
                 [
                     'delete'     => 'CASCADE',
@@ -251,7 +251,7 @@ final class InitAcervoSpassu extends AbstractMigration
             )
             ->addForeignKey(
                 'Assunto_CodAs',
-                'Assunto',
+                'MigrationAssunto',
                 'CodAs',
                 [
                     'delete'     => 'CASCADE',
@@ -303,7 +303,7 @@ final class InitAcervoSpassu extends AbstractMigration
         $this->table('MigrationLivro_Autor')
             ->addForeignKey(
                 'Livro_CodL',
-                'Livro',
+                'MigrationLivro',
                 'CodL',
                 [
                     'delete'     => 'CASCADE',
@@ -313,7 +313,7 @@ final class InitAcervoSpassu extends AbstractMigration
             )
             ->addForeignKey(
                 'Autor_CodAu',
-                'Autor',
+                'MigrationAutor',
                 'CodAu',
                 [
                     'delete'     => 'CASCADE',
