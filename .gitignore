@@ -1,0 +1,20 @@
+# Composer
+/vendor/
+composer.phar
+
+# Phinx e automáticos
+*.bak
+*.log
+*_phinx.sql
+phinx_*.sql
+*.phinx.sql
+
+# SQLs manuais permitidos
+!assets/mer/
+!assets/mer/**/*.sql
+
+# IDEs e sistema
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

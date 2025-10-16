@@ -17,7 +17,14 @@
                 <input type="hidden" id="codigoassunto" name="codigoassunto" value="<?= !empty($retornoPdo['CodAs']) ? $retornoPdo['CodAs'] : '' ?>">
                 
                 <label for="descricaoassunto">Descrição Assunto</label>
-                <input type="text" id="descricaoassunto" name="descricaoassunto" maxlength="20" value="<?= !empty($retornoPdo['Descricao']) ? $retornoPdo['Descricao'] : '' ?>" onfocus="document.getElementById('iframeManter').src='about:blank';" required>
+                <input 
+                type="text" 
+                id="descricaoassunto" 
+                name="descricaoassunto" 
+                maxlength="20" 
+                value="<?= !empty($retornoPdo['Descricao']) ? $retornoPdo['Descricao'] : '' ?>" 
+                onfocus="document.getElementById('iframeManter').src='about:blank';" 
+                required>
                 
                 <button id="btnEnviar">ENVIAR</button>
             </form>

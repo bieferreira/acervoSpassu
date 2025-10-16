@@ -50,5 +50,12 @@ CONFIGURAÇÃO utilização
     => clonar projeto
     => docker network create mynetwork
     => criar estrutura de dados assets/mer
+    => instalar migration
+        >> composer require robmorgan/phinx --dev
+        >> vendor/bin/phinx init
+        >> vendor/bin/phinx create InitAcervoSpassu
+    => aplicar migration
+        >> vendor/bin/phinx migrate
+        >> vendor/bin/phinx rollback -t 0
     => chmod -R 777 relatorio/_lib/tmp
     => http://localhost/principal.html
