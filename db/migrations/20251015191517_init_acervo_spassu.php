@@ -481,6 +481,7 @@ final class InitAcervoSpassu extends AbstractMigration
 
         //Tabela Livro_Assunto
         if ($this->hasTable('MigrationLivro_Assunto')) {
+            $this->execute("ALTER TABLE `MigrationAssunto` DROP CHECK `FK_LivroAssunto_Assunto`");
             $this->table('MigrationLivro_Assunto')->drop()->save();
         }        
 
